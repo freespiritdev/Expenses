@@ -4,9 +4,24 @@
 		date: ''
 		amount: ''
 
+	valid: ->
+		@state.title && @state.date && @state.amount 
+
 	handleChange: (event) ->
 		name = event.target.name
 		@setState "#{ name }": event.target.value
+
+	handleSubmit: (event) ->
+		event.preventDefault()
+		$.post '', { record: @state }, (data) =>
+			@props.handleNewRecord data
+			@setState @getInitialState(),
+			'JSON'
+
+	render: ->
+		React.DOM.form
+			className: 'form-inline'
+			onSubmit: @handleSubmit
 	render: ->
 		React.DOM.form
 			className: 'form-group'
