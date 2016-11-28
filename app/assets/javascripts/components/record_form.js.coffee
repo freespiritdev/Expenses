@@ -51,6 +51,6 @@
 		          onChange: @handleChange
 		      React.DOM.button
 		        type: 'submit'
-		        className: 'btn btn-info'
+		        className: 'btn btn-primary'
 		        disabled: !@valid()
 		        'Create record'

@@ -20,15 +20,18 @@
     @debits() + @credits()
 
   addRecord: (record) ->
-    records = @state.records.slice()
-    records.push record
+    records = React.addons.update(@state.records, { $push: [record] })
     @setState records: records
 
-    deleteRecord: (record) ->
-      records = @state.records.slice()
-      index = records.indexOf record
-      records.splice index, 1
-      @replaceState records: records
+  deleteRecord: (record) ->
+    index = @state.records.indexOf record
+    records = React.addons.update(@state.records, { $splice: [[index, 1]] })
+    @replaceState records: records
+
+  updateRecord: (record, data) ->
+    index = @state.records.indexOf record
+    records = React.addons.update(@state.records, { $splice: [[index, 1, data]] })
+    @replaceState records: records
 
   render: ->
     React.DOM.div
@@ -54,4 +57,4 @@
             React.DOM.th null, 'Actions'
         React.DOM.tbody null,
           for record in @state.records
-            React.createElement Record, key: record.id, record: record, handleDeleteRecord: @deleteRecord
+            React.createElement Record, key: record.id, record: record, handleDeleteRecord: @deleteRecord, handleEditRecord: @updateRecord
