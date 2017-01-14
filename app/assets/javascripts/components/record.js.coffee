@@ -7,8 +7,7 @@
 		@setState edit: !@state.edit
 
 	handleDelete: (e) ->
-      e.preventDefault()
-      
+      e.preventDefault()  
       $.ajax
         method: 'DELETE'
         url: "/records/#{ @props.record.id }"
